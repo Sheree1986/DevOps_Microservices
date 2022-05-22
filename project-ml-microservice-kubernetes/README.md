@@ -1,10 +1,6 @@
 [![CircleCI](https://circleci.com/gh/Sheree1986/DevOps_Microservices/tree/master.svg?style=svg)](https://circleci.com/gh/Sheree1986/DevOps_Microservices/tree/master)
 
-## Project Overview
-
-In this project, you will apply the skills you have acquired in this course to operationalize a Machine Learning Microservice API. 
-
-You are given a pre-trained, `sklearn` model that has been trained to predict housing prices in Boston according to several features, such as average rooms in a home and data about highway access, teacher-to-pupil ratios, and so on. You can read more about the data, which was initially taken from Kaggle, on [the data source site](https://www.kaggle.com/c/boston-housing). This project tests your ability to operationalize a Python flask app—in a provided file, `app.py`—that serves out predictions (inference) about housing prices through API calls. This project could be extended to any pre-trained machine learning model, such as those for image recognition and data labeling.
+Overall this project was a lot more easier to follow than project #3. I realized that when I cloned the github it included all the assignements for this unit. Because of this oversight on my part, a lot of files that needed to be in the root directory to run were not. This caused the lint error and install dependencies errors.  
 
 ### Project Tasks
 
@@ -17,28 +13,22 @@ Your project goal is to operationalize this working, machine learning microservi
 * Deploy a container using Kubernetes and make a prediction
 * Upload a complete Github repo with CircleCI to indicate that your code has been tested
 
-You can find a detailed [project rubric, here](https://review.udacity.com/#!/rubrics/2576/view).
 
-**The final implementation of the project will showcase your abilities to operationalize production microservices.**
 
 ---
 
 ## Setup the Environment
 
-* Create a virtualenv with Python 3.7 and activate it. Refer to this link for help on specifying the Python version in the virtualenv. 
-```bash
-python3 -m pip install --user virtualenv
+1) clone the repo (git clone https://github.com/udacity/DevOps_Microservices.git) becasue of root error it may be best to create a new repo and add the need files. if you do that you will not have to cd into the two folders (cd DevOps_Microservices
+cd project-ml-microservice-kubernetes)
 
-python3 -m virtualenv --python=<path-to-Python3.7> .devops
-source .devops/bin/activate
-```
-* Run `make install` to install the necessary dependencies
+2) This creates a new enviroment as per the instructions:
+python3 -m venv ~/.devops
+source ~/.devops/bin/activate
 
+I followed the below steps to run the environment via ANACONDA
 
 Used the class forum to get make install the work (https://knowledge.udacity.com/questions/749227) the steps are below:
-
-
-The main problem with this project is that it requires a python version 3.7 , and on mac I have installed 3.8 , I didn't find a way to downgrade or use both pythons but with ANACONDA.
 
 Download Anaconda
 Once installed, in terminal type: conda init
@@ -55,31 +45,32 @@ conda create -n "devops" python=3.7 -c conda-forge
 
 after it finish installing, I run
 
-make Install (inside the devops enviroment just created)
+
+3) make install to install the depedencies in the requirements.txt
+4) Docker was already installed due to previous exercise
+5)  brew install hadolint is required to preform the lint test
+6)  In order to run  a Kubernetes cluster local install the following:
+   	a) brew install --cask virtualbox (original didn't work brew cask install virtualbox)
+	b) brew install --cask minkube (original didn't work brew cask install minikube)
+## Task
+
+1) Set up Dockerfile then one lint checks
+2) Run a Container & Make a Prediction - complete the steps in the run_docker.sh file and run in the terminal
+3) Make predications and update the docker_out.txt file for assignment
+4) edit ./run_docker.sh and run to create docker image
+5) run  ./upload_docker.sh. to update it to the dockerhub
+6) now we can set up the image to run locally by configuring Kubernetes this is where the vitualbox we installed earlier is needed
+7) The run_kubernetes.sh need to be edited in order to run upload_docker.sh to create a pod 
+8) After a 5 min intermission we can update the out put to kubernetes_out.txt.
+9) Lastly we must sync circleci to the github repo and run the provided config.yml file
+10) in order to take you must first create a new folder and file on github by going to the repo and click create new file.
+11) Once you link the repo to circleci you can see if the code pass the lint check.
 
 
+As mentioned ealier I had trouble due to the fact that the code and files weren't in the root folder. But after correcting this the lint checks all passed. 
 
-### Running `app.py`
-
-1. Standalone:  `python app.py`
-2. Run in Docker:  `./run_docker.sh`
-3. Run in Kubernetes:  `./run_kubernetes.sh`
-
-### Kubernetes Steps
-
-* Setup and Configure Docker locally
-* Setup and Configure Kubernetes locally
-* Create Flask app in Container
-* Run via kubectl
-
-
-CircleCI Integration
-Status Failed to get the depedencys to install I had to use the following in the install makefile (pip install --upgrade pip &&\
-		pip install -r requirements.txt) this fails the lint test but allows dependenies to run.
-
-
-        On the other hand if I was to use the following in the Makefile (RUN pip install --no-cache-dir requirements.txt) the test pass but the depedencies can't install.
-        
-         the following error displays "note: This error originates from a subprocess, and is likely not a problem with pip. error: subprocess-exited-with-error × pip subprocess to install build dependencies did not run successfully. │ exit code: 1 ╰─> See above for output."
 
 [![CircleCI](https://circleci.com/gh/Sheree1986/DevOps_Microservices/tree/master.svg?style=svg)](https://circleci.com/gh/Sheree1986/DevOps_Microservices/tree/master)
+
+
+
